@@ -34,7 +34,7 @@ public class Player : MonoBehaviour
 
         if (Input.GetKey(KeyCode.W))
         {
-            rigbody.AddForce(Vector2.MoveTowards(transform.position, dct.position, 10));
+            rigbody.AddForce(Vector2.MoveTowards(transform.position, dct.position, 3));
         }
 
         if (Input.GetKey(KeyCode.S))
