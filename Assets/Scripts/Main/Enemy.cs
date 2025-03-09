@@ -18,25 +18,21 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         targetObject = GameObject.FindGameObjectWithTag(targetTag);
-        //if(targetObject != null)
-        //{
-
-        //}
+        if(targetObject != null)
+        {
+            targetTransform = targetObject.transform;
+        }
     }
 
     private void Update()
     {
-        transform.Translate(direction * speed * Time.deltaTime);
-        targetTransform = targetObject.transform;
-        direction = (targetTransform.position - transform.position).normalized;
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        if(targetTransform != null)
         {
-            print("Collided with an enemy!");
-            direction = -direction;
+            Vector2 currentPos = transform.position;
+            Vector2 targetPos = targetTransform.position;
+            float step = speed * Time.deltaTime;
+
+            transform.position = Vector2.MoveTowards(currentPos, targetPos, step);
         }
     }
 
