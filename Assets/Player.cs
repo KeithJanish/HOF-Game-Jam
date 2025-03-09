@@ -7,13 +7,13 @@ using static UnityEngine.GraphicsBuffer;
 public class Player : MonoBehaviour
 {
     public float horMove;
-    public float vertMove;
     public Rigidbody2D rigbody;
     public GameObject dcFab; // DreamCirclePrefab
     public GameObject dcObj; // DreamCircleObject
     public Vector2 moveToHere;
     public Vector2 dcObjThrowPoint;
     public int spawnDelayTimer;
+    public float speed;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -24,22 +24,20 @@ public class Player : MonoBehaviour
     void Update()
     {
         horMove = Input.GetAxis("Horizontal");
-        //vertMove = Input.GetAxis("Vertical");
 
-        rigbody.AddForce(new Vector2(horMove, vertMove));
+        rigbody.AddForce(new Vector2(horMove * speed, 0));
 
         if (Input.GetKeyDown(KeyCode.Mouse0) && dcObj == null)
         {
             spawnDelayTimer = 100;
             dcObj = Instantiate(dcFab, transform.position, Quaternion.identity);
             dcObjThrowPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            //dcObj.transform.position = transform.position;
         }
         else
         {
             if (Input.GetKey(KeyCode.W))
             {
-                moveToHere = (dcObj.transform.position - transform.position) * 2; //Vector2.MoveTowards(transform.position, dcObj.transform.position, 0.1f);
+                moveToHere = (dcObj.transform.position - transform.position) * 2;
 
                 rigbody.AddForce(moveToHere);
             }
