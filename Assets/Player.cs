@@ -45,8 +45,9 @@ public class Player : MonoBehaviour
     }
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.tag == "DreamCircle")
+        if (collision.gameObject.tag == "DreamCircle")
         {
+            Destroy(collision.gameObject);
         }
     }
 }
