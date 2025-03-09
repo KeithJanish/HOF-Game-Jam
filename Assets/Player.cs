@@ -11,7 +11,9 @@ public class Player : MonoBehaviour
     public Rigidbody2D rigbody;
     public GameObject dcFab; // DreamCirclePrefab
     public GameObject dcObj; // DreamCircleObject
-    public Transform dct; // DreamCircleTransform
+    public Vector2 moveToHere;
+    public Vector2 dcObjThrowPoint;
+    public int spawnDelayTimer;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -28,26 +30,42 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Mouse0) && dcObj == null)
         {
-            dcObj = Instantiate(dcFab, Camera.main.ScreenToWorldPoint(Input.mousePosition), Quaternion.identity);
-            dcObj.transform.position = new Vector3(dcObj.transform.position.x, dcObj.transform.position.y, 0);
-            dct = dcObj.transform;
+            spawnDelayTimer = 100;
+            dcObj = Instantiate(dcFab, transform.position, Quaternion.identity);
+            dcObjThrowPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            //dcObj.transform.position = transform.position;
         }
-
-        if (Input.GetKey(KeyCode.W))
+        else
         {
-            rigbody.AddForce(Vector2.MoveTowards(transform.position, dct.position, 3));
-        }
+            if (Input.GetKey(KeyCode.W))
+            {
+                moveToHere = (dcObj.transform.position - transform.position) * 2; //Vector2.MoveTowards(transform.position, dcObj.transform.position, 0.1f);
 
-        if (Input.GetKey(KeyCode.S))
-        {
-            dct.position = Vector2.MoveTowards(dct.position, transform.position, 0.1f);
+                rigbody.AddForce(moveToHere);
+            }
+
+            if (Input.GetKey(KeyCode.S))
+            {
+                dcObj.transform.position = Vector2.MoveTowards(dcObj.transform.position, transform.position, 0.1f);
+            }
+            else
+            {
+                dcObj.transform.position = Vector2.MoveTowards(dcObj.transform.position, dcObjThrowPoint, 0.1f);
+            }
+            spawnDelayTimer -= 1;
         }
     }
-    void OnCollisionEnter(Collision collision)
+    void OnTriggerEnter2D(Collider2D other)
     {
-        if (collision.gameObject.tag == "DreamCircle")
+        Debug.Log("Trigger");
+        if (other.CompareTag("DreamCircle") && spawnDelayTimer <= 0)
         {
-            Destroy(collision.gameObject);
+            Destroy(other.gameObject);
+            Debug.Log("DreamCircle Destroyed");
         }
+    }
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log("Collision");
     }
 }
