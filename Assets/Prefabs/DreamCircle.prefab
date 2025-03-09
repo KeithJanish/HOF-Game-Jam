@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8934229393234586050}
   m_Layer: 0
   m_Name: DreamCircle
-  m_TagString: Untagged
+  m_TagString: DreamCircle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

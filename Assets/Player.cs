@@ -20,8 +20,8 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //float horMove = Input.GetAxis("Horizontal");
-        float vertMove = Input.GetAxis("Vertical");
+        horMove = Input.GetAxis("Horizontal");
+        //vertMove = Input.GetAxis("Vertical");
 
         rigbody.AddForce(new Vector2(horMove, vertMove));
 
@@ -34,12 +34,12 @@ public class Player : MonoBehaviour
 
         if (Input.GetKey(KeyCode.W))
         {
-            rigbody.AddForce(Vector2.MoveTowards(transform.position, dct.position, 10));
+            rigbody.AddForce(Vector2.MoveTowards(transform.position, dct.position, 3));
         }
 
         if (Input.GetKey(KeyCode.S))
         {
-            dct.position = Vector2.MoveTowards(dct.position, transform.position, 10);
+            dct.position = Vector2.MoveTowards(dct.position, transform.position, 0.1f);
         }
     }
 }
