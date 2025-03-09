@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.Rendering;
 using UnityEngine.UIElements;
 using static UnityEngine.GraphicsBuffer;
@@ -40,6 +41,12 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.S))
         {
             dct.position = Vector2.MoveTowards(dct.position, transform.position, 0.1f);
+        }
+    }
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.tag == "DreamCircle")
+        {
         }
     }
 }
